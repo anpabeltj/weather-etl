@@ -28,12 +28,14 @@ Open-Meteo API
 
 ```
 weather-api/
-├── script/
-│   ├── extract.py      # Fetch weather data from Open-Meteo API
-│   ├── transform.py    # Transform raw JSON into a Pandas DataFrame
-│   └── load.py         # Load DataFrame into PostgreSQL
-├── logs/               # Airflow logs
-├── docker-compose.yml  # Multi-service Docker setup
+├── dags/
+│   └── weather_dag.py      # Airflow DAG orchestrating the ETL pipeline
+├── scripts/
+│   ├── extract.py          # Fetch weather data from Open-Meteo API
+│   ├── transform.py        # Transform raw JSON into a Pandas DataFrame
+│   └── load.py             # Load DataFrame into PostgreSQL
+├── logs/                   # Airflow logs
+├── docker-compose.yml      # Multi-service Docker setup
 └── README.md
 ```
 
@@ -94,6 +96,15 @@ Weather data is fetched from the **Open-Meteo API** (free, no API key required):
 
 ## 🗄️ Database
 
+Two PostgreSQL instances are running:
+
+| Instance           | Purpose               | Port       |
+| ------------------ | --------------------- | ---------- |
+| `postgres-airflow` | Airflow metadata DB   | internal   |
+| `postgres-weather` | Weather data storage  | `5434`     |
+
+### Weather DB connection:
+
 | Setting  | Value           |
 | -------- | --------------- |
 | Host     | `localhost`     |
@@ -105,10 +116,22 @@ Weather data is fetched from the **Open-Meteo API** (free, no API key required):
 
 ---
 
+## 🌀 Airflow DAG
+
+The `weather_pipeline` DAG runs daily and executes three tasks in sequence:
+
+```
+extract_weather_data >> transform_weather_data >> load_weather_data
+```
+
+Data is passed between tasks using Airflow XCom.
+
+---
+
 ## ▶️ Running Scripts Manually
 
 ```bash
-cd script/
+cd scripts/
 
 # Extract only
 python extract.py
@@ -125,8 +148,9 @@ python load.py
 ## 📌 Notes
 
 - Timezone is set to `Asia/Jakarta` (UTC+7)
-- Default city is **Jakarta**: update the city name in the scripts to fetch data for other cities
+- Default city is **Jakarta** — update the city name in `weather_dag.py` to fetch data for other cities
 - The `weather_daily` table uses `append` mode, so re-running will add new rows
+- Airflow runs with `LocalExecutor` and loads examples disabled
 
 ---
 
