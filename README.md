@@ -41,15 +41,15 @@ weather-api/
 
 ## 🔧 Tech Stack
 
-| Tool | Purpose |
-|---|---|
-| 🐍 Python | ETL scripting |
+| Tool              | Purpose                  |
+| ----------------- | ------------------------ |
+| 🐍 Python         | ETL scripting            |
 | 🌐 Open-Meteo API | Free weather data source |
-| 🐼 Pandas | Data transformation |
-| 🐘 PostgreSQL | Data storage |
-| 🌀 Apache Airflow | Pipeline orchestration |
-| 📊 Metabase | Data visualization |
-| 🐳 Docker Compose | Container management |
+| 🐼 Pandas         | Data transformation      |
+| 🐘 PostgreSQL     | Data storage             |
+| 🌀 Apache Airflow | Pipeline orchestration   |
+| 📊 Metabase       | Data visualization       |
+| 🐳 Docker Compose | Container management     |
 
 ---
 
@@ -66,6 +66,7 @@ docker compose up -d
 ```
 
 This will spin up:
+
 - **Airflow** → [http://localhost:8080](http://localhost:8080) (admin / admin)
 - **Metabase** → [http://localhost:3000](http://localhost:3000)
 - **PostgreSQL (weather_db)** → `localhost:5434`
@@ -81,26 +82,26 @@ Weather data is fetched from the **Open-Meteo API** (free, no API key required):
 
 ### Fields collected (daily, past 7 days):
 
-| Column | Description |
-|---|---|
-| `date` | Date of record |
-| `temp_max` | Maximum temperature (°C) |
-| `temp_min` | Minimum temperature (°C) |
+| Column          | Description              |
+| --------------- | ------------------------ |
+| `date`          | Date of record           |
+| `temp_max`      | Maximum temperature (°C) |
+| `temp_min`      | Minimum temperature (°C) |
 | `precipitation` | Total precipitation (mm) |
-| `city` | City name |
+| `city`          | City name                |
 
 ---
 
 ## 🗄️ Database
 
-| Setting | Value |
-|---|---|
-| Host | `localhost` |
-| Port | `5434` |
-| Database | `weather_db` |
-| User | `weather_user` |
-| Password | `weather_pass` |
-| Table | `weather_daily` |
+| Setting  | Value           |
+| -------- | --------------- |
+| Host     | `localhost`     |
+| Port     | `5434`          |
+| Database | `weather_db`    |
+| User     | `weather_user`  |
+| Password | `weather_pass`  |
+| Table    | `weather_daily` |
 
 ---
 
@@ -124,7 +125,7 @@ python load.py
 ## 📌 Notes
 
 - Timezone is set to `Asia/Jakarta` (UTC+7)
-- Default city is **Jakarta** — update the city name in the scripts to fetch data for other cities
+- Default city is **Jakarta**: update the city name in the scripts to fetch data for other cities
 - The `weather_daily` table uses `append` mode, so re-running will add new rows
 
 ---
