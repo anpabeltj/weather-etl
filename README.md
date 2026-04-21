@@ -1,6 +1,6 @@
 # 🌤️ Weather ETL Pipeline
 
-A simple ETL (Extract, Transform, Load) data pipeline that fetches daily weather forecast data from the [Open-Meteo API](https://open-meteo.com/), transforms it into a structured format, and loads it into a PostgreSQL database — all orchestrated with Apache Airflow and visualized via Metabase.
+A simple ETL (Extract, Transform, Load) data pipeline that fetches daily weather forecast data from the [Open-Meteo API](https://open-meteo.com/), transforms it into a structured format, and loads it into a PostgreSQL database, all orchestrated with Apache Airflow and visualized via Metabase.
 
 ---
 
@@ -9,16 +9,12 @@ A simple ETL (Extract, Transform, Load) data pipeline that fetches daily weather
 ```
 Open-Meteo API
       │
-      ▼
   🔍 Extract       → Fetch coordinates + 7-day weather forecast
       │
-      ▼
   🔄 Transform     → Clean & structure data with Pandas
       │
-      ▼
   📦 Load          → Store into PostgreSQL (weather_db)
       │
-      ▼
   📊 Metabase      → Visualize weather data
 ```
 
@@ -98,10 +94,10 @@ Weather data is fetched from the **Open-Meteo API** (free, no API key required):
 
 Two PostgreSQL instances are running:
 
-| Instance           | Purpose               | Port       |
-| ------------------ | --------------------- | ---------- |
-| `postgres-airflow` | Airflow metadata DB   | internal   |
-| `postgres-weather` | Weather data storage  | `5434`     |
+| Instance           | Purpose              | Port     |
+| ------------------ | -------------------- | -------- |
+| `postgres-airflow` | Airflow metadata DB  | internal |
+| `postgres-weather` | Weather data storage | `5434`   |
 
 ### Weather DB connection:
 
@@ -148,7 +144,7 @@ python load.py
 ## 📌 Notes
 
 - Timezone is set to `Asia/Jakarta` (UTC+7)
-- Default city is **Jakarta** — update the city name in `weather_dag.py` to fetch data for other cities
+- Default city is **Jakarta**: update the city name in `weather_dag.py` to fetch data for other cities
 - The `weather_daily` table uses `append` mode, so re-running will add new rows
 - Airflow runs with `LocalExecutor` and loads examples disabled
 
