@@ -94,10 +94,10 @@ Weather data is fetched from the **Open-Meteo API** (free, no API key required):
 
 Two PostgreSQL instances are running:
 
-| Instance           | Purpose              | Port     |
-| ------------------ | -------------------- | -------- |
-| `postgres-airflow` | Airflow metadata DB  | internal |
-| `postgres-weather` | Weather data storage | `5434`   |
+| Instance           | Purpose              | Port                                                  |
+| ------------------ | -------------------- | ----------------------------------------------------- |
+| `postgres-airflow` | Airflow metadata DB  | internal                                              |
+| `postgres-weather` | Weather data storage | `5434` for local development or `5432` for production |
 
 ### Weather DB connection:
 
