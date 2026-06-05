@@ -1,14 +1,13 @@
-import sys
-sys.path.insert(0, '/opt/airflow/scripts')
+
 
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
 
 
-import extract as e
-import transform as t
-import load as l
+from scripts import extract as e
+from scripts import transform as t
+from scripts import load as l
 
 default_args = {
     'owner': 'airflow',
